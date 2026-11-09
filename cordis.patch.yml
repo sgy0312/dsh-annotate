@@ -1,0 +1,25 @@
+# dsh-annotate bundle patch
+#
+# This file is the `dsh.bundle.patch` layer of the package: installing it through
+# the official CLI —
+#
+#   dsh plugin --profile <name> add dsh-annotate
+#
+# — appends `dsh-annotate` to `dsh.profile.bundles`, and the profile boot merges
+# this patch (one `insert` of the plugin row) exactly like the manual mount line
+# used before. No profile file edits are needed.
+#
+# The second row disables the built-in `@deepseek-ai/dsh-message-quotes` entry.
+# Both plugins claim the transcript selection gesture, and the interaction
+# registry keeps only the first handler that opens a surface, so leaving both
+# enabled would make which button appears depend on registration order. The
+# annotation surface replaces the plain quote action, so the quote row steps
+# aside. Remove this row if you prefer the built-in quote button and want to
+# trigger annotation some other way.
+
+- insert:
+    - id: dsh-annotate
+      name: 'dsh-annotate'
+
+- id: message-quotes
+  disabled: true
